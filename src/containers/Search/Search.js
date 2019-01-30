@@ -15,11 +15,13 @@ export class SearchPlanet extends Component{
       optionVisibility: false,
       TimeOut:60,
       Retry:15,
-      isAdmin:false
+      isAdmin:false,
+      _isMounted: false
   }
 
 StartTimer(){
-    setInterval(()=> {
+    if(this.state._isMounted)
+{    setInterval(()=> {
     if(this.state.TimeOut === 0){
         this.setState({
             TimeOut: 60,
@@ -32,14 +34,21 @@ StartTimer(){
     }
     }, 1000)
 }
+}
 
 
     componentDidMount(){
+        this.setState({_isMounted:true});
          this.props.planets();
          this.StartTimer();   
          if(this.props.userId===adminUser)
          { this.setState({isAdmin:true})};   
     }
+
+    componentWillUnmount(){
+        this.setState({_isMounted:false});
+    }
+
     onOptionClickHandler=(url, val)=>{
         this.setState({
             inputValue:val,
