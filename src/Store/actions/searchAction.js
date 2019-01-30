@@ -18,11 +18,11 @@ export const planetOptionFail=(error)=>{
         error:error
     }
 }
-export const planets=()=>{
+export const planets=(param)=>{
     return dispatch=>{
         dispatch(planetOptionStart());
 
-        axios.get('https://swapi.co/api/planets/')
+        axios.get('https://swapi.co/api/planets/?search='+param)
         .then((res)=>{
             dispatch(planetOptionSuccess(res))
         })

@@ -65,7 +65,8 @@ StartTimer(){
                 inputValue: e.target.value,
                 optionVisibility: e.target.value.length > 0,
                 Retry:this.state.Retry-1
-            })
+            });
+            this.props.planets(e.target.value);
            
         if(!this.props.loading1){
             options=this.props.planetOption.data.results;
@@ -141,7 +142,7 @@ StartTimer(){
 
 const mapDispatchToProps=(dispatch)=>{
     return{
-        planets:()=>dispatch(actionTypes.planets()),
+        planets:(param)=>dispatch(actionTypes.planets(param)),
         optionClickHandler: (url)=> dispatch(actionTypes.planetInfo(url))
     }
 }
