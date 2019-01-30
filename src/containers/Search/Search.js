@@ -15,13 +15,11 @@ export class SearchPlanet extends Component{
       optionVisibility: false,
       TimeOut:60,
       Retry:15,
-      isAdmin:false,
-      _isMounted: false
+      isAdmin:false
   }
 
 StartTimer(){
-    if(this.state._isMounted)
-{    setInterval(()=> {
+   setInterval(()=> {
     if(this.state.TimeOut === 0){
         this.setState({
             TimeOut: 60,
@@ -34,19 +32,13 @@ StartTimer(){
     }
     }, 1000)
 }
-}
 
 
     componentDidMount(){
-        this.setState({_isMounted:true});
          this.props.planets();
          this.StartTimer();   
          if(this.props.userId===adminUser)
          { this.setState({isAdmin:true})};   
-    }
-
-    componentWillUnmount(){
-        this.setState({_isMounted:false});
     }
 
     onOptionClickHandler=(url, val)=>{
@@ -70,9 +62,12 @@ StartTimer(){
            
         if(!this.props.loading1){
             options=this.props.planetOption.data.results;
-            
-            for (var i=0; i<options.length; i++) {
-                planetObj[options[i].name] = options[i].url;
+           let filterList= options.filter(entry=>(entry.population!=="unknown"))
+            .sort((initial,second)=>parseInt(initial.population)-parseInt(second.population));
+            let unknownList=options.filter(entry=>(entry.population==="unknown"));
+            let dataList=[...unknownList,...filterList];
+            for (var i=0; i<dataList.length; i++) {
+                planetObj[dataList[i].name] = dataList[i].url;
               }
             
             const suggestionNames= Object.keys(planetObj).map(name=>{
@@ -106,7 +101,7 @@ StartTimer(){
         }
         let warningMessage=null;
         if(this.state.Retry===0){
-        warningMessage=<p style={{color:'orange'}}>Warning! you have been restricted to search.ait until {this.state.TimeOut} seconds...</p>
+        warningMessage=<p style={{color:'orange'}}>Warning! you have been restricted to search. until {this.state.TimeOut} seconds...</p>
         }
         let authenticatedUser= null;
         if(!this.props.isAuthenticated){

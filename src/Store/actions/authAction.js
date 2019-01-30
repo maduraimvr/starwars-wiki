@@ -40,8 +40,7 @@ export const checkAuthTimeOut=(expiresTime)=>{
 export const auth=(email,password)=>{
     return dispatch=>{
         dispatch(authStart());
-    const fullUrl = 'https://swapi.co/api/people/?search='+email;
-       let url=fullUrl;
+    const url = 'https://swapi.co/api/people/?search='+email;
        let errorMsg;
         axios.get(url)
         .then(res=>{
