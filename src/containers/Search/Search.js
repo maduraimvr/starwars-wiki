@@ -5,6 +5,7 @@ import {Redirect} from 'react-router-dom';
 import classes from './Search.css';
 import Planet from '../../components/Planet/planet';
 import Planetdescription from '../../components/planetDescription/planetDescription'
+import spinner from '../../components/BasicUI/spinner/spinner';
 
 const adminUser='Luke Skywalker';
 export class SearchPlanet extends Component{
@@ -78,7 +79,7 @@ StartTimer(){
                 suggestions:{...planetObj},
 
             })    
-        }   
+        }  
     }      
     }
     render(){
@@ -124,7 +125,7 @@ StartTimer(){
                 {authenticatedUser}
                 <div className={classes.SearchBox}>
                 <input type="text" placeholder="Enter some keyword"
-                 onChange={this.inputHandler} value={this.state.inputValue}/>
+                 onChange={this.inputHandler} onKeyPress={this.inputHandler} value={this.state.inputValue}/>
                  {this.state.optionVisibility ? <ul>{suggestedOptions}</ul> : null}
                 </div>
                 {!this.props.planetinfoStart ?<Planetdescription planetInfo = {this.props.planetInfo.data}/> :null}

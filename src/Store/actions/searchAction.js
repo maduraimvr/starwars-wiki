@@ -20,6 +20,7 @@ export const planetOptionFail=(error)=>{
 }
 export const planets=(param)=>{
     return dispatch=>{
+        if(param!==''){
         dispatch(planetOptionStart());
 
         axios.get('https://swapi.co/api/planets/?search='+param)
@@ -28,7 +29,7 @@ export const planets=(param)=>{
         })
         .catch((err)=>{
             dispatch(planetOptionFail(err));
-        })
+        })}
     }
 }
 
