@@ -58,7 +58,7 @@ export const auth=(email,password)=>{
             localStorage.setItem('token', res.data.authToken);
             localStorage.setItem('userId', res.data.results[0].name); 
             localStorage.setItem('expirationDate',expirationDate);
-            localStorage.setItem('profileData',res.data.results[0]); 
+            localStorage.setItem('profileData',JSON.stringify(res.data.results[0])); 
             dispatch(authSuccess(res.data.authToken,  res.data.results[0].name,res.data.results[0]));
             dispatch(checkAuthTimeOut(res.data.expiresIn));}
             else{
@@ -81,7 +81,7 @@ export const auth=(email,password)=>{
 export const authCheckStatus= ()=>{
     const token=  localStorage.getItem('token');
     const userId=localStorage.getItem('userId');
-    const profileData=localStorage.getItem('profileData'); 
+    const profileData=JSON.parse(localStorage.getItem('profileData')); 
     const expireTime=new Date(localStorage.getItem('expirationDate'));   
     return dispatch=>{
         if(!token){
